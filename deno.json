@@ -1,0 +1,12 @@
+{
+  "imports": {
+    "@mogeko/aes-gcm": "jsr:@mogeko/aes-gcm@^0.1.1"
+  },
+  "compilerOptions": {
+    "checkJs": true,
+    "strict": true
+  },
+  "unstable": [
+    "sloppy-imports"
+  ]
+}
