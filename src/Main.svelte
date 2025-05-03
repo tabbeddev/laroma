@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	import Notifications from "./components/Notifications.svelte";
 	import SecondButton from "./components/SecondButton.svelte";
 	import Card from "./components/icons/Card.svelte";
 	import MatchIcon from "./components/icons/Match.svelte";
 	import Determine from "./components/icons/Determine.svelte";
 	import TextIcon from "./components/icons/Text.svelte";
+	import Word from "./components/icons/Word.svelte";
 	import Set from "./components/icons/Set.svelte";
 	import Flashcards from "./Flashcards.svelte";
 	import Close from "./components/icons/Close.svelte";
-	import Bell from "./components/icons/Bell.svelte";
 	import { getSRS } from "$lib/srs";
 	import CreateStudySet from "./CreateStudySet.svelte";
 	import type { SetManager } from "$lib/setManager.svelte";
@@ -22,6 +21,7 @@
 	import Translate from "./Translate.svelte";
 	import Match from "./Match.svelte";
 	import type { StudySet } from "$lib/studysets";
+	import TranslateToText from "./TranslateToText.svelte";
 
 	enum State {
 		Home,
@@ -33,6 +33,7 @@
 		Match,
 		// Train
 		Translate,
+		TranslateToText,
 	}
 
 	let { sets }: { sets: SetManager } = $props();
@@ -93,7 +94,7 @@
 	function nextStudyStamp(): [string, boolean, string] {
 		const [stamp, set] = getSRS().findNextStudyTime();
 		if (stamp == Infinity)
-			return ["Kein Lernset muss wiederholt werden.", false, ""];
+			return ["Kein Lernset wurde bisher gelernt.", false, ""];
 
 		const date = new Date(stamp).toLocaleString(undefined, {
 			weekday: "short",
@@ -109,7 +110,6 @@
 	}
 
 	let dev_mode: boolean = $state(false);
-	let worker: ServiceWorkerRegistration | undefined = $state();
 
 	let notifications: string[] = $state([]);
 	let appState: State = $state(State.Home);
@@ -129,24 +129,9 @@
 		studyset = validateStudyset(studyset);
 	});
 
-	onMount(async () => {
-		notify("Willkommen zurück!");
-
-		if ("serviceWorker" in navigator) {
-			worker = await navigator.serviceWorker.register("/service-worker.js");
-			console.log("Worker registered");
-		} else if (location.protocol === "http:") {
-			return notify(
-				"Service Worker nicht unterstützt, da nicht HTTPS verwendet wird!",
-			);
-		} else {
-			return notify("Warnung: Service Worker nicht unterstützt!");
-		}
-
-		setInterval(() => {
-			nextStudy = nextStudyStamp();
-		}, 5 * 60);
-	});
+	setInterval(() => {
+		nextStudy = nextStudyStamp();
+	}, 5 * 60);
 </script>
 
 {#if appState === State.Home}
@@ -233,10 +218,19 @@
 			{#if currentSet.practise_sentences?.length}
 				<SecondButton
 					title="Übersetzen"
+					subtitle="Übersetze einzelne Sätze mit vorgegebenen Wörtern"
+					Icon={Word}
+					onclick={() => {
+						appState = State.Translate;
+					}}
+				/>
+
+				<SecondButton
+					title="Übersetzen (Text)"
 					subtitle="Übersetze einzelne Sätze"
 					Icon={TextIcon}
 					onclick={() => {
-						appState = State.Translate;
+						appState = State.TranslateToText;
 					}}
 				/>
 			{/if}
@@ -258,19 +252,6 @@
 
 			{#if dev_mode}
 				<h1 class="text-2xl">Debugfunktionen</h1>
-				<SecondButton
-					title="Zwangsupdate ServiceWorker"
-					onclick={() => {
-						worker?.update();
-						location.reload();
-					}}
-				/>
-				<SecondButton
-					title="Cache invalidieren"
-					onclick={() => {
-						worker?.active?.postMessage({ action: "invalidateCache" });
-					}}
-				/>
 				<SecondButton title="SRS zurücksetzen" onclick={resetSRS} />
 			{/if}
 		{:else}
@@ -393,6 +374,8 @@
 			<Match set={currentSet || {}} {hardMode} />
 		{:else if appState === State.Translate}
 			<Translate set={currentSet || {}} {hardMode} />
+		{:else if appState === State.TranslateToText}
+			<TranslateToText set={currentSet || {}} {hardMode} />
 		{/if}
 	</SlideInBox>
 {/if}

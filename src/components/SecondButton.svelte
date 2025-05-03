@@ -1,6 +1,6 @@
 <script lang="ts">
 	let {
-		onclick = undefined,
+		onclick = () => {},
 		title,
 		subtitle = undefined,
 		Icon = undefined,

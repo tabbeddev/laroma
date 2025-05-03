@@ -28,12 +28,6 @@
 	<h1 class="text-2xl">An error occured</h1>
 	<p>Please reload the page to avoid further problems.</p>
 	<button type="button" onclick={() => location.reload()}>Reload page</button>
-	<button
-		type="button"
-		onclick={() => {
-			error = undefined;
-		}}>Continue anyways</button
-	>
 	<h2>More details:</h2>
 	<p class="font-mono">
 		{error.message} @ {new URL(error.filename).pathname} : {error.lineno}:{error.colno}
