@@ -47,12 +47,12 @@ export class SRS {
 
   findNextStudyTime(): [number, string] {
     let next: number = Infinity;
-		let setname: string = "";
+    let setname: string = "";
     for (const [name, set] of Object.entries(this.data)) {
       for (const vocab of Object.values(set)) {
         if (vocab.stamp < next) {
           next = vocab.stamp;
-					setname = name;
+          setname = name;
         }
       }
     }
@@ -62,9 +62,9 @@ export class SRS {
   getDueVocabs(setName: string): string[] {
     const now = Date.now();
     // @ts-ignore (should work, cause of the filter)
-    return Object.entries(this.data[setName]).map(([k, v]) =>
-      v.stamp < now && k
-    ).filter(Boolean);
+    return Object.entries(this.data[setName])
+      .map(([k, v]) => v.stamp < now && k)
+      .filter(Boolean);
   }
 }
 

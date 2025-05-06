@@ -10,25 +10,29 @@ enum Genus {
 
 // Vocabularies
 
-const VocabularyOBJ = t.type({
-  original: t.string,
-  translation: t.array(t.string),
-  additional_info: t.union([t.string, t.undefined]),
-  type: t.union([
-    t.literal("nouns"),
-    t.literal("verbs"),
-    t.literal("adjectives"),
-    t.literal("others"),
-		t.undefined
-  ]),
-  genitive: t.union([t.string, t.undefined]),
-  genus: t.union([t.keyof(Genus), t.undefined]),
-  first_prs: t.union([t.string, t.undefined]),
-  first_perf: t.union([t.string, t.undefined]),
-  conjugation: t.union([t.string, t.undefined]),
-  female: t.union([t.string, t.undefined]),
-  neuter: t.union([t.string, t.undefined]),
-});
+const VocabularyOBJ = t.intersection([
+  t.type({
+    original: t.string,
+    translation: t.array(t.string),
+    additional_info: t.union([t.string, t.null]),
+    type: t.union([
+      t.literal("nouns"),
+      t.literal("verbs"),
+      t.literal("adjectives"),
+      t.literal("others"),
+      t.null,
+    ]),
+  }),
+  t.partial({
+    genitive: t.string,
+    genus: t.keyof(Genus),
+    first_prs: t.string,
+    first_perf: t.string,
+    conjugation: t.string,
+    female: t.string,
+    neuter: t.string,
+  }),
+]);
 export type Vocabulary = t.TypeOf<typeof VocabularyOBJ>;
 
 const Noun = t.intersection([
@@ -73,20 +77,24 @@ const Sentence = t.type({
 
 // StudySet
 
-export const StudySetOBJ = t.type({
-  name: t.string,
-  description: t.string,
-  author: t.string,
-  version: t.string,
-  url: t.union([t.string, t.undefined]),
+export const StudySetOBJ = t.intersection([
+  t.type({
+    name: t.string,
+    description: t.string,
+    author: t.string,
+    version: t.string,
+  }),
+  t.partial({
+    url: t.string,
 
-  vocabularies: t.union([Vocabularies, t.undefined]),
-  practise_sentences: t.union([t.array(Sentence), t.undefined]),
-  determine_nouns: t.union([t.array(t.string), t.undefined]),
-  determine_verbs: t.union([t.array(t.string), t.undefined]),
-  determine_nouns_options: t.union([t.array(t.string), t.undefined]),
-  determine_verbs_options: t.union([t.array(t.string), t.undefined]),
-});
+    vocabularies: Vocabularies,
+    practise_sentences: t.array(Sentence),
+    determine_nouns: t.array(t.string),
+    determine_verbs: t.array(t.string),
+    determine_nouns_options: t.array(t.string),
+    determine_verbs_options: t.array(t.string),
+  }),
+]);
 
 export type StudySet = t.TypeOf<typeof StudySetOBJ>;
 

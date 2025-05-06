@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { StudySet } from "$lib/studysets";
-	import Check from "./components/icons/study/Check.svelte";
-	import Next from "./components/icons/study/Next.svelte";
+  import { Check, ChevronRight } from "@lucide/svelte";
 	import SecondButton from "./components/SecondButton.svelte";
 
 	function transformSentence(orig: string[]): string {
@@ -66,7 +65,7 @@
 	{#if hasTranslated !== undefined}
 		{@const solution = transformSentence(sentence.translation)}
 
-		<SecondButton title="Weiter" Icon={Next} onclick={next} />
+		<SecondButton title="Weiter" Icon={ChevronRight} onclick={next} />
 
 		<div
 			class="second-bg"

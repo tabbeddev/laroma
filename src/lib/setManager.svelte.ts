@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import type { StudySet } from "./studysets.ts";
 import { decrypt } from "jsr:@mogeko/aes-gcm";
 
@@ -49,10 +51,7 @@ export class SetManager {
           const set: StudySet = JSON.parse(content);
 
           if (!set.name || !set.description || !set.author || !set.version) {
-            this.invalid_urls.push([
-              url,
-              "notaset",
-            ]);
+            this.invalid_urls.push([url, "notaset"]);
             return console.warn(
               "Failed to load: " + url.url + " - Invalid Set",
             );
@@ -61,10 +60,7 @@ export class SetManager {
           this.sets[set.name] = set;
           this.sets[set.name].url = url.url;
         } catch {
-          this.invalid_urls.push([
-            url,
-            "invalid",
-          ]);
+          this.invalid_urls.push([url, "invalid"]);
           console.warn("Failed to load: " + url.url + " - Invalid JSON!");
         }
       } else {
@@ -77,9 +73,7 @@ export class SetManager {
   }
 
   async loadAll(): Promise<void> {
-    for (const url of this.urls) {
-      await this.load(url);
-    }
+    await Promise.all([this.urls.map((e) => this.load(e))]);
   }
 
   addUrl(settings: URLSettings) {

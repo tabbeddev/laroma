@@ -26,8 +26,7 @@ Array.prototype.equals = function (array: any[]): boolean {
 };
 
 Array.prototype.toShuffled = function (): any[] {
-  return this
-    .map((v) => ({ v, sort: Math.random() }))
+  return this.map((v) => ({ v, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ v }) => v);
 };

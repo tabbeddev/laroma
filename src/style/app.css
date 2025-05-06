@@ -31,6 +31,37 @@
   }
 }
 
+@property --color1 {
+  syntax: "<color>";
+  initial-value: #660080;
+  inherits: false;
+}
+
+@property --color2 {
+  syntax: "<color>";
+  initial-value: #330080;
+  inherits: false;
+}
+
+@keyframes scale-up {
+  from {
+    font-size: 0;
+  }
+}
+
+@keyframes fade-from-purple {
+  from {
+    color: var(--color-purple-400) !important;
+  }
+}
+
+@keyframes change-bg {
+  to {
+    --color1: #0d4d61;
+    --color2: #3ca39c;
+  }
+}
+
 button,
 input[type="url"],
 textarea,
@@ -46,7 +77,7 @@ input[type="password"] {
   margin: 0.25rem 1vw;
   width: 98vw;
 
-	transition: all 500ms;
+  transition: all 500ms;
 }
 
 .centered {
@@ -62,14 +93,30 @@ bg {
   height: 100vh;
   display: block;
   overflow: hidden !important;
+
+  button,
+  input[type="url"],
+  textarea,
+  select,
+  input[type="text"],
+  input[type="password"] {
+		padding: 0 15px;
+    height: 32px;
+  }
 }
 
 bg.sparkles {
-  background: linear-gradient(
-    0deg,
-    #660080 35%,
-    #330080 100%
-  );
+  background: linear-gradient(0deg, var(--color1) 35%, var(--color2) 100%);
+  transition: --color1 500ms, --color2 500ms;
+}
+
+bg.sparkles.change-bg {
+  animation: change-bg 2s forwards linear;
+}
+
+bg.sparkles.creator-fresh {
+  --color1: #0d4d61;
+  --color2: #3ca39c;
 }
 
 h1.intro {
@@ -79,6 +126,14 @@ h1.intro {
 h2.intro {
   animation: subfade 500ms 2s forwards;
   opacity: 0;
+}
+
+.intro2 {
+  animation: scale-up 2s forwards;
+}
+
+.from-purple {
+  animation: fade-from-purple 2s forwards;
 }
 
 .notibox {
@@ -98,7 +153,8 @@ h2.intro {
   }
 }
 
-.second-bg, .third-bg {
+.second-bg,
+.third-bg {
   border-radius: 0.5rem;
   border: solid 2px;
   padding: 4px;
@@ -143,7 +199,7 @@ h2.intro {
   input[type="text"]:disabled,
   input[type="password"]:disabled {
     background-color: rgb(65, 65, 65);
-		color: rgb(190, 190, 190);
+    color: rgb(190, 190, 190);
   }
 
   .notibox .noti {
@@ -151,13 +207,19 @@ h2.intro {
     border-color: rgb(100, 100, 100);
   }
 
-  .second-bg, button {
+  .second-bg,
+  button {
     background-color: rgb(100, 100, 100);
     border-color: rgb(75, 75, 75);
   }
 
   .second-bg.disabled {
     background-color: rgb(65, 65, 65);
+  }
+
+  bg.sparkles.creator-pale {
+    --color1: #062129;
+    --color2: #173f3d;
   }
 }
 
@@ -176,29 +238,34 @@ h2.intro {
     background-color: rgb(200, 200, 200);
     border-color: rgb(190, 190, 190);
   }
-	
+
   input[type="url"]:disabled,
   textarea:disabled,
   select:disabled,
   input[type="text"]:disabled,
   input[type="password"]:disabled {
     background-color: rgb(240, 240, 240);
-		color: rgb(90, 90, 90);
+    color: rgb(90, 90, 90);
   }
-
 
   .notibox .noti {
     background-color: rgb(200, 200, 200);
     border-color: rgb(175, 175, 175);
   }
 
-  .second-bg, button {
+  .second-bg,
+  button {
     background-color: rgb(225, 225, 225);
     border-color: rgb(200, 200, 200);
   }
 
   .second-bg.disabled {
     background-color: rgb(150, 150, 150);
+  }
+
+  bg.sparkles.creator-pale {
+    --color1: #b8e0ec;
+    --color2: #c4efed;
   }
 }
 

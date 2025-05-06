@@ -27,43 +27,43 @@
 // Registration
 
 interface WorkerNavigator {
-	readonly serviceWorker: ServiceWorkerContainer;
+  readonly serviceWorker: ServiceWorkerContainer;
 }
 
 interface ServiceWorkerContainer {
-	readonly controller: ServiceWorker | null;
-	readonly ready: Promise<ServiceWorkerRegistration>;
-	oncontrollerchange:
-		| ((this: ServiceWorkerContainer, event: Event) => any)
-		| null;
-	onerror: ((this: ServiceWorkerContainer, event?: Event) => any) | null;
-	onmessage:
-		| ((this: ServiceWorkerContainer, ev: MessageEvent<any>) => any)
-		| null;
-	getRegistration(scope?: string): Promise<ServiceWorkerRegistration>;
-	getRegistrations(): Promise<ServiceWorkerRegistration[]>;
-	register(
-		url: string,
-		options?: ServiceWorkerRegistrationOptions
-	): Promise<ServiceWorkerRegistration>;
+  readonly controller: ServiceWorker | null;
+  readonly ready: Promise<ServiceWorkerRegistration>;
+  oncontrollerchange:
+    | ((this: ServiceWorkerContainer, event: Event) => any)
+    | null;
+  onerror: ((this: ServiceWorkerContainer, event?: Event) => any) | null;
+  onmessage:
+    | ((this: ServiceWorkerContainer, ev: MessageEvent<any>) => any)
+    | null;
+  getRegistration(scope?: string): Promise<ServiceWorkerRegistration>;
+  getRegistrations(): Promise<ServiceWorkerRegistration[]>;
+  register(
+    url: string,
+    options?: ServiceWorkerRegistrationOptions,
+  ): Promise<ServiceWorkerRegistration>;
 }
 
 interface ServiceWorkerMessageEvent extends Event {
-	readonly data: any;
-	readonly lastEventId: string;
-	readonly origin: string;
-	readonly ports: ReadonlyArray<MessagePort> | null;
-	readonly source: ServiceWorker | MessagePort | null;
+  readonly data: any;
+  readonly lastEventId: string;
+  readonly origin: string;
+  readonly ports: ReadonlyArray<MessagePort> | null;
+  readonly source: ServiceWorker | MessagePort | null;
 }
 
 interface ServiceWorkerRegistrationOptions {
-	scope?: string;
+  scope?: string;
 }
 
 // Client API
 
 interface Client {
-	readonly frameType: ClientFrameType;
+  readonly frameType: ClientFrameType;
 }
 
 type ClientFrameType = "auxiliary" | "top-level" | "nested" | "none";
@@ -73,41 +73,41 @@ type ClientFrameType = "auxiliary" | "top-level" | "nested" | "none";
 interface ActivateEvent extends ExtendableEvent {}
 
 interface InstallEvent extends ExtendableEvent {
-	readonly activeWorker: ServiceWorker;
+  readonly activeWorker: ServiceWorker;
 }
 
 // Fetch API
 
 interface Body {
-	readonly body: ReadableStream<Uint8Array<ArrayBufferLike>> | null;
+  readonly body: ReadableStream<Uint8Array<ArrayBufferLike>> | null;
 }
 
 interface Headers {
-	entries(): string[][];
-	keys(): string[];
-	values(): string[];
+  entries(): string[][];
+  keys(): string[];
+  values(): string[];
 }
 
 interface Response extends Body {
-	readonly useFinalURL: boolean;
-	clone(): Response;
-	error(): Response;
-	redirect(): Response;
+  readonly useFinalURL: boolean;
+  clone(): Response;
+  error(): Response;
+  redirect(): Response;
 }
 
 // Notification API
 
 interface Notification {
-	readonly actions: NotificationAction[];
-	readonly requireInteraction: boolean;
-	readonly silent: boolean | null;
-	readonly tag: string;
-	readonly renotify: boolean;
-	readonly timestamp: number;
-	readonly title: string;
-	readonly vibrate: number[];
-	close(): void;
-	requestPermission(): Promise<string>;
+  readonly actions: NotificationAction[];
+  readonly requireInteraction: boolean;
+  readonly silent: boolean | null;
+  readonly tag: string;
+  readonly renotify: boolean;
+  readonly timestamp: number;
+  readonly title: string;
+  readonly vibrate: number[];
+  close(): void;
+  requestPermission(): Promise<string>;
 }
 
 interface NotificationAction {}

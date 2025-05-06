@@ -21,6 +21,7 @@
 		});
 		notify("Lernset hinzugefügt: " + data.get("l-url"));
 		rtrn();
+		 		 console.log( "Hello worl");
 	}
 </script>
 

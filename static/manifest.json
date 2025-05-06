@@ -11,21 +11,23 @@
 	"id": "/",
 	"description": "Sprachen einfach lernen",
 	"icons": [
-		{"src": "/icons/16x16.png", "sizes": "16x16"},
-		{"src": "/icons/32x32.png", "sizes": "32x32"},
-		{"src": "/icons/72x72.png", "sizes": "72x72"},
-		{"src": "/icons/96x96.png", "sizes": "96x96"},
-		{"src": "/icons/120x120.png", "sizes": "120x120"},
-		{"src": "/icons/128x128.png", "sizes": "128x128"},
-		{"src": "/icons/144x144.png", "sizes": "144x144"},
-		{"src": "/icons/152x152.png", "sizes": "152x152"},
-		{"src": "/icons/180x180.png", "sizes": "180x180"},
-		{"src": "/icons/192x192.png", "sizes": "192x192"},
-		{"src": "/icons/384x384.png", "sizes": "384x384"},
-		{"src": "/icons/512x512.png", "sizes": "512x512"}
+		{ "src": "/icons/16x16.png", "sizes": "16x16" },
+		{ "src": "/icons/32x32.png", "sizes": "32x32" },
+		{ "src": "/icons/72x72.png", "sizes": "72x72" },
+		{ "src": "/icons/96x96.png", "sizes": "96x96" },
+		{ "src": "/icons/120x120.png", "sizes": "120x120" },
+		{ "src": "/icons/128x128.png", "sizes": "128x128" },
+		{ "src": "/icons/144x144.png", "sizes": "144x144" },
+		{ "src": "/icons/152x152.png", "sizes": "152x152" },
+		{ "src": "/icons/180x180.png", "sizes": "180x180" },
+		{ "src": "/icons/192x192.png", "sizes": "192x192" },
+		{ "src": "/icons/384x384.png", "sizes": "384x384" },
+		{ "src": "/icons/512x512.png", "sizes": "512x512" }
 	],
-	"screenshots": [{
-		"src": "phone.png",
-		"sizes": "360x760"
-	}]
+	"screenshots": [
+		{
+			"src": "phone.png",
+			"sizes": "360x760"
+		}
+	]
 }

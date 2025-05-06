@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Icon as IconType } from "@lucide/svelte";
+
 	let {
 		onclick = () => {},
 		title,
@@ -6,11 +8,18 @@
 		Icon = undefined,
 		classes = [],
 		disabled = false,
+	}: {
+		onclick?: Function;
+		title: string;
+		subtitle?: string;
+		Icon?: typeof IconType;
+		classes?: string[];
+		disabled?: boolean;
 	} = $props();
 </script>
 
 <div
-	class={["second-bg", "cursor-pointer", ...classes, disabled && "disabled"]}
+	class={["second-bg", "cursor-pointer", ...classes, disabled && "disabled", "text-left"]}
 	onclick={() => {
 		!disabled && onclick();
 	}}
@@ -18,7 +27,7 @@
 	{#if Icon}
 		<div class="flex items-center">
 			<div class="shrink-0">
-				<Icon />
+				<Icon size={40} />
 			</div>
 
 			<div class="ml-1">

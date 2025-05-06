@@ -1,9 +1,8 @@
 <script lang="ts">
 	import type { StudySet } from "$lib/studysets";
 	import { scale } from "svelte/transition";
-	import Check from "./components/icons/study/Check.svelte";
-	import Next from "./components/icons/study/Next.svelte";
 	import SecondButton from "./components/SecondButton.svelte";
+  import { Check, ChevronRight } from "@lucide/svelte";
 
 	function checkSentence(sentence: (typeof sentences)[0]) {
 		hasTranslated = translated.equals(sentence.translation);
@@ -79,7 +78,7 @@
 					</div>
 				{/if}
 			</div>
-			<SecondButton title="Weiter" Icon={Next} onclick={next} />
+			<SecondButton title="Weiter" Icon={ChevronRight} onclick={next} />
 		{:else}
 			<div class="third-bg flex flex-wrap gap-0.5">
 				{#each translation as word}

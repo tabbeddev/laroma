@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fade } from "svelte/transition";
-	import Close from "./icons/Close.svelte";
+	import { X } from "@lucide/svelte";
 
 	let { notifications = $bindable() }: { notifications: string[] } = $props();
 </script>
@@ -9,7 +9,8 @@
 	{#each notifications as noti}
 		<p class="noti flex items-center justify-between" in:fade>
 			{noti}
-			<Close
+			<X
+				size={40}
 				onclick={() => {
 					notifications.splice(notifications.indexOf(noti), 1);
 				}}
