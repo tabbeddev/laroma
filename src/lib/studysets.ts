@@ -2,7 +2,7 @@ import * as t from "io-ts";
 import { PathReporter } from "io-ts/PathReporter";
 import { isLeft } from "fp-ts/Either";
 
-enum Genus {
+export enum Genus {
   Male = "Male",
   Female = "Female",
   Neuter = "Neuter",
@@ -20,7 +20,7 @@ const VocabularyOBJ = t.intersection([
       t.literal("verbs"),
       t.literal("adjectives"),
       t.literal("others"),
-      t.null,
+      t.undefined,
     ]),
   }),
   t.partial({

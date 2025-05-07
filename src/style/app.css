@@ -43,10 +43,16 @@
   inherits: false;
 }
 
-@keyframes scale-up {
+@keyframes slide-out {
   from {
-    font-size: 0;
+    width: 0px;
+		padding-inline: 0;
+		color: transparent
   }
+	to {
+		width: 183.5px;
+		padding-inline: 4px;
+	}
 }
 
 @keyframes fade-from-purple {
@@ -75,7 +81,7 @@ input[type="password"] {
   padding: 10px;
   font-size: 14pt;
   margin: 0.25rem 1vw;
-  width: 98vw;
+  width: 98%;
 
   transition: all 500ms;
 }
@@ -129,7 +135,9 @@ h2.intro {
 }
 
 .intro2 {
-  animation: scale-up 2s forwards;
+  animation: slide-out 2s forwards;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .from-purple {

@@ -2,7 +2,7 @@
   import type { StudySet, Vocabulary } from "./lib/studysets";
   import { mergeVocabs } from "./lib/studylib";
   import { type SRS, getSRS } from "$lib/srs";
-	import { Check, RefreshCw, X } from "@lucide/svelte";
+  import { Check, RefreshCw, X } from "@lucide/svelte";
 
   function convert(type: string): string {
     switch (type) {
@@ -65,7 +65,7 @@
   let vocab_data: [string, Vocabulary][] = $state([]);
 
   // svelte-ignore non_reactive_update
-	let srs: SRS | undefined;
+  let srs: SRS | undefined;
 
   const merged = mergeVocabs(set);
 

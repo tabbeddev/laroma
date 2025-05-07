@@ -376,7 +376,13 @@
     />
   </SlideInBox>
 {:else if appState === State.Creator}
-  <Creator close={() => {appState = State.ChangeStudySet}} set={sets} {notify} />
+  <Creator
+    close={() => {
+      appState = State.ChangeStudySet;
+    }}
+    set={sets}
+    {notify}
+  />
 {:else if studyset}
   <SlideInBox>
     <div

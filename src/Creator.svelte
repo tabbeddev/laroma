@@ -7,10 +7,14 @@
     ClipboardIcon,
     CreditCard,
     FilePlus,
+    FlaskConical,
+    Save,
     Upload,
     X,
   } from "@lucide/svelte";
-  import type { StudySet } from "$lib/studysets";
+  import { isStudySet, type StudySet } from "$lib/studysets";
+  import EditVocabs from "./creator-pages/EditVocabs.svelte";
+  import { save } from "./creator-pages/download";
 
   enum State {
     Intro,
@@ -46,7 +50,7 @@
     e.preventDefault();
     function fail() {
       notify(
-        "Das ist kein valides Lernset. Bitte beachte, dass Lernset entschlüsseln noch nicht unterstützt ist.",
+        "Das ist kein valides Lernset. Bitte beachte, dass Lernset entschlüsseln noch nicht unterstützt ist. Bitte beachte auch, dass durch einen Bug alte Lernsets nicht unterstützt sind.",
       );
     }
 
@@ -56,19 +60,31 @@
       try {
         editingSet = JSON.parse(await files[0].text()) as StudySet;
 
-        if (
-          !editingSet.name ||
-          !editingSet.description ||
-          !editingSet.author ||
-          !editingSet.version
-        )
-          return fail();
+        if (!isStudySet(editingSet)[0]) return fail();
       } catch {
         return fail();
       }
       appState = State.Edit;
     }
   }
+
+  function goback() {
+    if (
+      confirm(
+        "Dabei werden alle ungespeicherten Änderungen verworfen. Fortfahren?",
+      )
+    ) {
+      appState = State.Home;
+    }
+  }
+
+	function test() {
+		if (editingSet && confirm("Dabei wird lAroma Lernset Creator geschlossen und alle ungespeicherten Änderungen verworfen. Fortfahren?")) {
+			set.sets[editingSet.name] = editingSet;
+			set.sets[editingSet.name].description += " (aus Lernset Creator geladen)";
+			close();
+		}
+	}
 
   const {
     close,
@@ -97,7 +113,7 @@
     <div class="centered flex min-w-fit! items-end gap-1">
       <h1 class="text-5xl text-cyan-100 from-purple">lAroma</h1>
       <span
-        class="text-2xl text-cyan-100 intro2"
+        class="text-2xl rounded-sm intro2 bg-cyan-100 text-cyan-900"
         onanimationend={() => {
           setTimeout(() => {
             appState = State.Home;
@@ -109,7 +125,13 @@
     </div>
   {:else if appState === State.Home}
     <div class="centered" in:fade>
-      <h1 class="text-3xl font-bold text-white">lAroma Lernset Creator</h1>
+      <div class="flex items-end gap-1 justify-center">
+        <h1 class="text-5xl text-cyan-100">lAroma</h1>
+        <span class="text-2xl rounded-sm bg-cyan-100 text-cyan-900 px-1">
+          Lernset Creator
+        </span>
+      </div>
+
       <p class="text-white">Wähle eine Option aus:</p>
       <SecondButton
         onclick={() => {
@@ -146,7 +168,7 @@
       id="c-import"
       style="display: none;"
       onchange={importFile}
-      accept="text/json"
+      accept=".json"
     />
   {:else if appState === State.Create}
     <div class="centered" in:fade>
@@ -179,10 +201,29 @@
         }}
       />
       <SecondButton
+        title="Speichern"
+        Icon={Save}
+        onclick={() => {
+          save(editingSet);
+        }}
+      />
+			<SecondButton
+				title="In lAroma testen"
+				Icon={FlaskConical}
+				onclick={test} />
+      <SecondButton
         title="Zurück"
         Icon={ChevronLeft}
         subtitle="Zurück zum Hauptmenü"
+        onclick={goback}
       />
     </div>
+  {:else if appState === State.EditVocabs && editingSet}
+    <EditVocabs
+      bind:editingSet
+      close={() => {
+        appState = State.Edit;
+      }}
+    />
   {/if}
 </bg>
